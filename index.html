@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buho Notification Settings</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="settings-container">
+    <h2 class="settings-headline">Notifications</h2>
+
+    <!-- Email Notifications -->
+    <div class="notification-option">
+      <label class="toggle-label" for="email-notifications">
+        <span>Email Notifications</span>
+        <label class="switch">
+          <input type="checkbox" id="email-notifications">
+          <span class="slider"></span>
+        </label>
+      </label>
+      <p id="email-confirmation" class="confirmation-message"></p>
+    </div>
+
+    <!-- Telegram Notifications -->
+    <div class="notification-option">
+      <label class="toggle-label" for="telegram-notifications">
+        <span>Telegram Notifications</span>
+        <label class="switch">
+          <input type="checkbox" id="telegram-notifications">
+          <span class="slider"></span>
+        </label>
+      </label>
+
+      <div id="telegram-settings" class="telegram-settings hidden">
+        <div class="input-group">
+          <label for="telegram-api-key">Telegram Bot API Key</label>
+          <input type="text" id="telegram-api-key" class="input-field" placeholder="Enter your API key">
+        </div>
+
+        <div class="input-group">
+          <label for="telegram-chat-id">Telegram Chat ID</label>
+          <input type="text" id="telegram-chat-id" class="input-field" placeholder="Enter your Chat ID">
+        </div>
+
+        <div class="info-box">
+          <p>How to gather this information:</p>
+          <ol>
+            <li>Obtain a bot API key from <a href="https://t.me/botfather" target="_blank" rel="noopener">BotFather</a>.</li>
+            <li>Use the bot to obtain your Chat ID. <a href="#" id="tutorial-placeholder">Tutorial Coming Soon</a>.</li>
+          </ol>
+        </div>
+      </div>
+
+      <p id="telegram-confirmation" class="confirmation-message"></p>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
