@@ -4,9 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const telegramSettings = document.getElementById('telegram-settings');
   const emailConfirmation = document.getElementById('email-confirmation');
   const telegramConfirmation = document.getElementById('telegram-confirmation');
-  const telegramApiKey = document.getElementById('telegram-api-key');
   const telegramChatId = document.getElementById('telegram-chat-id');
-  const tutorialPlaceholderLink = document.getElementById('tutorial-placeholder');
 
   // Function to update Email Notification Status
   emailToggle.addEventListener('change', () => {
@@ -27,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   telegramToggle.addEventListener('change', () => {
     if (telegramToggle.checked) {
       telegramSettings.classList.remove('hidden');
-      // Optionally, focus the first input field
-      telegramApiKey.focus();
+      // Optionally, focus the Chat ID input field
+      telegramChatId.focus();
     } else {
       telegramSettings.classList.add('hidden');
       telegramConfirmation.textContent = '';
@@ -39,38 +37,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to handle Telegram Settings Input
   const handleTelegramSettings = () => {
-    const apiKey = telegramApiKey.value.trim();
     const chatId = telegramChatId.value.trim();
 
-    if (apiKey && chatId) {
-      // TODO: Validate and send Telegram credentials to backend
-      const isValid = validateTelegramCredentials(apiKey, chatId);
+    if (chatId) {
+      // TODO: Validate and send Telegram Chat ID to backend
+      const isValid = validateTelegramChatId(chatId);
       if (isValid) {
         telegramConfirmation.textContent = 'Telegram notifications activated.';
-        updateNotificationSetting('telegram', true, { apiKey, chatId });
+        updateNotificationSetting('telegram', true, { chatId });
       } else {
-        telegramConfirmation.textContent = 'Invalid Telegram credentials. Please try again.';
+        telegramConfirmation.textContent = 'Invalid Telegram Chat ID. Please try again.';
       }
     } else {
-      telegramConfirmation.textContent = 'Please enter both API Key and Chat ID.';
+      telegramConfirmation.textContent = 'Please enter your Chat ID.';
     }
   };
 
-  // Event listeners for Telegram input fields
-  telegramApiKey.addEventListener('blur', handleTelegramSettings);
+  // Event listeners for Telegram Chat ID input field
   telegramChatId.addEventListener('blur', handleTelegramSettings);
-
-  // Placeholder Link for Tutorial
-  tutorialPlaceholderLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Show a message indicating the tutorial is coming soon
-    alert('The official tutorial is coming soon!');
+  telegramChatId.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      handleTelegramSettings();
+    }
   });
 
   // Placeholder Functions for Backend Integration
   function getUserEmail() {
     // Placeholder: Replace with actual logic to retrieve the user's email
-    return 'YourBuhoMailAddress@domain.de';
+    return 'YourBuhoMailAddress@domain.com';
   }
 
   function updateNotificationSetting(type, isEnabled, credentials = {}) {
@@ -93,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
     */
   }
 
-  function validateTelegramCredentials(apiKey, chatId) {
+  function validateTelegramChatId(chatId) {
     // Placeholder: Implement actual validation logic, possibly via backend
     // For demonstration, assume any non-empty input is valid
-    return apiKey.length > 0 && chatId.length > 0;
+    return chatId.length > 0;
   }
 
   // Initialize the settings based on existing user preferences
@@ -111,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         telegramToggle.checked = settings.telegram.enabled;
         if (settings.telegram.enabled) {
           telegramSettings.classList.remove('hidden');
-          telegramApiKey.value = settings.telegram.apiKey;
           telegramChatId.value = settings.telegram.chatId;
           telegramConfirmation.textContent = 'Telegram notifications activated.';
         }
